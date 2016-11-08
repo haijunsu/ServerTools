@@ -3,6 +3,6 @@ Useful tools for server management
 
 # Disable sudoer's password
 ```sh
-sudo su
-echo "YOUR NAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
+echo "`whoami` ALL=(ALL) NOPASSWD: ALL" > `whomai`
+sudo mv `whoami` /etc/sudoers.d/
 ```
