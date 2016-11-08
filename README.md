@@ -6,3 +6,4 @@ Useful tools for server management
 echo "`whoami` ALL=(ALL) NOPASSWD: ALL" > `whomai`
 sudo mv `whoami` /etc/sudoers.d/
 ```
+Test issue
