@@ -1,0 +1,19 @@
+I ran into this recently and I think I found an easy solution. I (only) tested it on Ubuntu 14.04.
+
+First, uncomment this line /etc/default/lxc-net:
+
+LXC_DHCP_CONFILE=/etc/lxc/dnsmasq.conf
+In /etc/lxc/dnsmasq.conf, define a dhcp-hostsfile:
+
+dhcp-hostsfile=/etc/lxc/dnsmasq-hosts.conf
+Then add entries in /etc/lxc/dnsmasq-hosts.conf like this:
+
+mail,10.0.3.16
+web,10.0.3.17
+Beware: changes will become effective after you have restarted lxc-net (which restarts dnsmasq):
+
+service lxc-net restart
+Afterwards you can modify /etc/lxc/dnsmasq-hosts.conf and send the SIGHUP signal to dnsmasq:
+
+killall -s SIGHUP dnsmasq
+So yes, you need to restart lxc-net, but only once. Hope this helps.
