@@ -1,4 +1,4 @@
-#sudo su -c 'echo "navysu ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers'
+#!/bin/bash
 echo "`whoami` ALL=(ALL) NOPASSWD: ALL" > `whoami` 
 chmod 440 `whoami`
 sudo chown root:root `whoami`
