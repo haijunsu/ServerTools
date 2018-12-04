@@ -1,15 +1,9 @@
 #!/bin/bash
 # rsync backup data to NAS
-SYNC_BACKUP_DIR="/DATA-SYNC/NAS/backup"
-if [ -e ${SYNC_BACKUP_DIR} ]; then
+echo ${1} ${2}
+if [ -e ${2} ]; then
 	echo `date`
-	rsync -rtD --delete-after /DATA-SYNC/backup-all/ ${SYNC_BACKUP_DIR}
-	echo `date`
-fi
-SYNC_SHARED_DIR="/DATA-SYNC/NAS/shared"
-if [ -e ${SYNC_SHARED_DIR} ]; then
-	echo `date`
-	rsync -rtD --delete-after /DATA-SYNC/backup-shared-all/ ${SYNC_SHARED_DIR}
+	rsync -rtD --delete-after /${1}/ ${2}
 	echo `date`
 fi
 
