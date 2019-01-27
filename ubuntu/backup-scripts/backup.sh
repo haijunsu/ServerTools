@@ -72,14 +72,11 @@ DB_LIST="/backup/db_server"
 if [ -e ${DB_LIST} ]; then
 	FILENAME="$TODAY.$HOSTNAME."
 
-	dbnames=`echo "show databases"|mysql |grep '^dev\|^prod'`
+	dbnames=`echo "show databases"|mysql |grep '^mysql\|^phpmyadmin\|^next\|^own\|^gua\|^dev\|^prod'`
 
 	for qx in ${dbnames}; do
         	backupMysqlDB ${BACKUPPATH} ${qx}
 	done
-        # backup system database
-	backupMysqlDB ${BACKUPPATH} mysql
-	backupMysqlDB ${BACKUPPATH} phpmyadmin
 
   #backup big database (start with 'nobak' or 'bpl')
 	EXCLUDE_NOBAK_TABLES=""
