@@ -65,7 +65,7 @@ if [ -d "/storage/ssl" ]; then
 fi
 tar -czf "${FILEPREFIX}config.tar.gz" etc
 
-tar -czf "${FILEPREFIX}userdata.tar.gz" home root --exclude='home/hadoop' --exclude='home/mongo' --exclude='home/glusterfs' --exclude='home/mysqldata'
+tar -czf "${FILEPREFIX}userdata.tar.gz" home root --exclude='home/hadoop' --exclude='home/storage' --exclude='home/mongo' --exclude='home/glusterfs' --exclude='home/mysqldata'
 
 # Backup database
 DB_LIST="/backup/db_server"
