@@ -14,7 +14,7 @@ if [ $# = 3 ]; then
     password="${3}"
 else
     if [ $# = 1 ]; then
-	username="${1}"
+      username="${1}"
     else
         while true; do
             printf "Please input username: "
@@ -29,7 +29,7 @@ else
     read hostname
 
     if [ "${hostname}X" = "X" ]; then
-	hostname="localhost"
+      hostname="localhost"
     fi
     while true; do
         while true; do   
