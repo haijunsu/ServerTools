@@ -65,14 +65,16 @@ if [ -d "/storage/ssl" ]; then
 fi
 tar -czf "${FILEPREFIX}config.tar.gz" etc
 
-tar -czf "${FILEPREFIX}userdata.tar.gz" home root --exclude='home/hadoop' --exclude='home/storage' --exclude='home/mongo' --exclude='home/glusterfs' --exclude='home/mysqldata'
+#tar -czf "${FILEPREFIX}userdata.tar.gz" home root --exclude='home/hadoop' --exclude='home/storage' --exclude='home/mongo' --exclude='home/glusterfs' --exclude='home/mysqldata'
+tar -czf "${FILEPREFIX}userdata.tar.gz" --exclude='home/hadoop' --exclude='home/storage' --exclude='home/mongo' --exclude='home/glusterfs' --exclude='home/mysqldata' home root
 
 # Backup database
 DB_LIST="/backup/db_server"
 if [ -e ${DB_LIST} ]; then
 	FILENAME="$TODAY.$HOSTNAME."
 
-	dbnames=`echo "show databases"|mysql |grep '^mysql\|^phpmyadmin\|^next\|^own\|^gua\|^dev\|^prod'`
+	# dbnames=`echo "show databases"|mysql |grep '^mysql\|^phpmyadmin\|^next\|^own\|^gua\|^dev\|^prod'`
+  dbnames=`echo "show databases"|mysql|grep -P '^(?!bpl|nobak|Database|information|performance)'`
 
 	for qx in ${dbnames}; do
         	backupMysqlDB ${BACKUPPATH} ${qx}
