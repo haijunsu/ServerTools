@@ -73,7 +73,8 @@ DB_LIST="/backup/db_server"
 if [ -e ${DB_LIST} ]; then
 	FILENAME="$TODAY.$HOSTNAME."
 
-	dbnames=`echo "show databases"|mysql |grep '^mysql\|^phpmyadmin\|^next\|^own\|^gua\|^dev\|^prod'`
+	# dbnames=`echo "show databases"|mysql |grep '^mysql\|^phpmyadmin\|^next\|^own\|^gua\|^dev\|^prod'`
+  dbnames=`echo "show databases"|mysql|grep -P '^(?!bpl|nobak|Database|information|performance)'`
 
 	for qx in ${dbnames}; do
         	backupMysqlDB ${BACKUPPATH} ${qx}
