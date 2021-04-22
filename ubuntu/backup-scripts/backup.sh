@@ -109,25 +109,15 @@ fi
 # backup lxd containers
 LXD_CONTAINER_LIST="/backup/lxd_containers"
 if [ -e ${LXD_CONTAINER_LIST} ]; then
-	container_names=$(</backup/lxd_containers)
+  container_names=`lxc list | grep ^\| | awk '{print $2}' | grep -v ^NAME`
 	for name in ${container_names}; do
+    echo "backup contianer ${name} ..."
 		if [ "${BACKUP_CONTAINERS}" = "TRUE" ]; then
-		    echo ${name}
 		    lxc snapshot ${name} ${TODAY} 
-                    lxc publish "${name}/${TODAY}" --alias "${name}-${TODAY}"
-                    lxc image export "${name}-${TODAY}" "${FILEPREFIX}lxd.${name}-tarball-image"
-                    lxc image delete "${name}-${TODAY}"
-		else
-			cd /var/lib/lxd/containers/${name}/rootfs
-			tar -czf "${FILEPREFIX}lxd.${name}.config.tar.gz" etc
-			tar -czf "${FILEPREFIX}lxd.${name}.userdata.tar.gz" home root
-			if [ -d "/var/lib/lxd/containers/${name}/rootfs/storage/wwwroot" ]; then
-				tar -czf "${FILEPREFIX}lxd.${name}.wwwroot.tar.gz" storage/wwwroot
-			fi
-			if [ -d "/var/lib/lxd/containers/${name}/rootfs/storage/github" ]; then
-				tar -czf "${FILEPREFIX}lxd.${name}.github.tar.gz" storage/github
-			fi
+        lxc image delete "${name}"
+        lxc publish "${name}/${TODAY}" --alias "${name}"
     fi
+    lxc export ${name} "${FILEPREFIX}lxd.${name}.tar.gz"
 	done
 fi
 
